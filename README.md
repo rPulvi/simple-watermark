@@ -1,2 +1,2 @@
 # simple-watermark
-Simple WPF for watermark creation
+Simple WPF applicatoin for watermark creation
