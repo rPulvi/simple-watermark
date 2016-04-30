@@ -1,0 +1,13 @@
+C:\Users\Ric\Documents\GitHub\simple-watermark\bin\Debug\EasyWatermark.exe.config
+C:\Users\Ric\Documents\GitHub\simple-watermark\bin\Debug\EasyWatermark.exe
+C:\Users\Ric\Documents\GitHub\simple-watermark\bin\Debug\EasyWatermark.pdb
+C:\Users\Ric\Documents\GitHub\simple-watermark\obj\Debug\EasyWatermark.csprojResolveAssemblyReference.cache
+C:\Users\Ric\Documents\GitHub\simple-watermark\obj\Debug\MainWindow.baml
+C:\Users\Ric\Documents\GitHub\simple-watermark\obj\Debug\MainWindow.g.cs
+C:\Users\Ric\Documents\GitHub\simple-watermark\obj\Debug\App.g.cs
+C:\Users\Ric\Documents\GitHub\simple-watermark\obj\Debug\EasyWatermark_MarkupCompile.cache
+C:\Users\Ric\Documents\GitHub\simple-watermark\obj\Debug\EasyWatermark.g.resources
+C:\Users\Ric\Documents\GitHub\simple-watermark\obj\Debug\EasyWatermark.Properties.Resources.resources
+C:\Users\Ric\Documents\GitHub\simple-watermark\obj\Debug\EasyWatermark.csproj.GenerateResource.Cache
+C:\Users\Ric\Documents\GitHub\simple-watermark\obj\Debug\EasyWatermark.exe
+C:\Users\Ric\Documents\GitHub\simple-watermark\obj\Debug\EasyWatermark.pdb

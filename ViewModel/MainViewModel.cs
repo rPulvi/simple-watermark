@@ -42,14 +42,17 @@ namespace EasyWatermark.ViewModel
             if (defaultLogo != null && File.Exists(defaultLogo))
                 LogoName = defaultLogo;
             else
-                LogoName = @"C:\cA.png";
+                LogoName = "";
 
             if (defaultOutPath != null && File.Exists(defaultOutPath))
                 OutputFolder = Properties.Settings.Default.OutputFolder;
             else
-                OutputFolder = @"C:\";
+                OutputFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-            _wMarker = new WMarker(LogoName);//Get logo path from settings
+            if (LogoName != null && LogoName.Length > 0)
+                _wMarker = new WMarker(LogoName);
+            else
+                _wMarker = new WMarker();
 
             SourceFiles = new ObservableCollection<string>();
             
@@ -105,8 +108,9 @@ namespace EasyWatermark.ViewModel
             if (_sourceFiles != null && _sourceFiles.Count() > 0)
             {
                 foreach (var f in _sourceFiles)
-                {                                        
-                    _wMarker.ApplyWatermark(f, LogoName, Path.Combine(OutputFolder, Path.GetFileName(f)));
+                {
+                    if(LogoName != null && LogoName.Length > 0)
+                        _wMarker.ApplyWatermark(f, LogoName, Path.Combine(OutputFolder, Path.GetFileName(f)));                        
                 }
 
                 MessageBox.Show("You're done");
