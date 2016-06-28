@@ -18,15 +18,15 @@ namespace EasyWatermark.ViewModel
         public DelegateCommand ApplyWatermark { get; private set; }
         public DelegateCommand OpenSettingsWindow { get; private set; }
         public DelegateCommand OpenLogoWin { get; private set; }
+        public DelegateCommand SelectOutputFolder { get; private set; }
         #endregion
-        
+
         public string LogoName {get;set;}
         public string OutputFolder { get; set; }
-        
-        public ObservableCollection<string> SourceFiles { get; set; }
+                
+        public ObservableCollection<PhotoItem> SourceImages { get; set; }
 
         private WMarker _wMarker;
-        private string[] _sourceFiles;        
 
         public MainViewModel() 
         {
@@ -35,6 +35,7 @@ namespace EasyWatermark.ViewModel
             ApplyWatermark = new DelegateCommand(c => this.DoApplyWatermark(), null);
             OpenSettingsWindow = new DelegateCommand(c => this.DoOpenSettingsWindow(), null);
             OpenLogoWin = new DelegateCommand(c => this.DoOpenLogoWin(), null);
+            SelectOutputFolder = new DelegateCommand(c => this.DoSelectOutputFolder(), null);
 
             var defaultLogo = Properties.Settings.Default.LogoPath;
             var defaultOutPath = Properties.Settings.Default.OutputFolder;
@@ -54,10 +55,23 @@ namespace EasyWatermark.ViewModel
             else
                 _wMarker = new WMarker();
 
-            SourceFiles = new ObservableCollection<string>();
+            SourceImages = new ObservableCollection<PhotoItem>();
             
             OnPropertyChanged("LogoName");
             OnPropertyChanged("OutputFolder");
+        }
+
+        private void DoSelectOutputFolder()
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                OutputFolder = dialog.SelectedPath;
+                OnPropertyChanged("OutputFolder");
+            }
+
         }
 
         private void DoQuitApplication()
@@ -73,9 +87,14 @@ namespace EasyWatermark.ViewModel
 
             if (ofd.ShowDialog() == true)
             {
-                _sourceFiles = ofd.FileNames;
-                SourceFiles = new ObservableCollection<string>(_sourceFiles);
-                OnPropertyChanged("SourceFiles");
+                foreach (var f in ofd.FileNames)
+                {
+                    PhotoItem item = new PhotoItem(f);
+                    if(item!=null)
+                        SourceImages.Add(item);
+                }
+
+                OnPropertyChanged("SourceImages");
                 //string[] safeFilePath = ofd.SafeFileNames; //Stores only the file name, wo the path.
             }
         }
@@ -105,12 +124,12 @@ namespace EasyWatermark.ViewModel
 
         private void DoApplyWatermark()
         {
-            if (_sourceFiles != null && _sourceFiles.Count() > 0)
+            if(SourceImages!= null && SourceImages.Count > 0)
             {
-                foreach (var f in _sourceFiles)
+                foreach (PhotoItem pi in SourceImages)
                 {
-                    if(LogoName != null && LogoName.Length > 0)
-                        _wMarker.ApplyWatermark(f, LogoName, Path.Combine(OutputFolder, Path.GetFileName(f)));                        
+                    if (LogoName != null && LogoName.Length > 0)
+                        _wMarker.ApplyWatermark(pi.FullPath, LogoName, Path.Combine(OutputFolder, Path.GetFileName(pi.FullPath)));
                 }
 
                 MessageBox.Show("You're done");
